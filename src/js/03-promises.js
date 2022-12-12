@@ -1,11 +1,5 @@
 import Notiflix from 'notiflix';
 
-/*
- * @param1 {string}: Required, a text in string format.
- * @param2 {function | Object}: Optional, a callback function that will be called when the notification element has been clicked. Or, extending the initialize options with the new options for each notification element.
- * @param3 {Object}: Optional, extending the initialize options with new the options for each notification element. (If the second parameter has been already used for a callback function.)
- */
-
 let startDelay = 0;
 let stepDelay = 0;
 
@@ -49,15 +43,15 @@ function onSubmit(event) {
   let stepDeletToNubmer = Number(dataForm.step);
 
   for (let position = 0; position < dataForm.amount; position += 1) {
-    let delay = (startDelayToNumber += stepDeletToNubmer);
+    const delay = (startDelayToNumber += stepDeletToNubmer);
 
     createPromise(position, delay)
-      .then((position, delay) => {
+      .then(({ position, delay }) => {
         Notiflix.Notify.success(
           `✅ Fulfilled promise ${position} in ${delay}ms`
         );
       })
-      .catch((position, delay) => {
+      .catch(({ position, delay }) => {
         Notiflix.Notify.failure(
           `❌ Rejected promise ${position} in ${delay}ms`
         );

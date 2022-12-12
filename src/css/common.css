@@ -10,9 +10,26 @@ body {
   background-color: #fafafa;
   color: #212121;
   line-height: 1.5;
+  align-items: center;
 }
 
 img {
   display: block;
   max-width: 100%;
+}
+
+.timer {
+  margin-top: 300px;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.value {
+  font-size: 60px;
+}
+
+span {
+  display: flex;
+  justify-content: center;
 }
