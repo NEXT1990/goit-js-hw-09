@@ -1,16 +1,13 @@
 import Notiflix from 'notiflix';
 
-let startDelay = 0;
-let stepDelay = 0;
-
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
-        resolve();
+        resolve({ position, delay });
       } else {
-        reject();
+        reject({ position, delay });
       }
     }, delay);
   });
@@ -39,13 +36,11 @@ function onSubmit(event) {
     step,
     amount,
   };
-  let startDelayToNumber = Number(dataForm.delay);
-  let stepDeletToNubmer = Number(dataForm.step);
+  let startDelay = Number(dataForm.delay);
+  let stepDeley = Number(dataForm.step);
 
-  for (let position = 0; position < dataForm.amount; position += 1) {
-    const delay = (startDelayToNumber += stepDeletToNubmer);
-
-    createPromise(position, delay)
+  for (let position = 1; position <= dataForm.amount; position += 1) {
+    createPromise(position, startDelay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(
           `✅ Fulfilled promise ${position} in ${delay}ms`
@@ -56,5 +51,6 @@ function onSubmit(event) {
           `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
+    startDelay += stepDeley;
   }
 }

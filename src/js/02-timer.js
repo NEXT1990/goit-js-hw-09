@@ -18,10 +18,6 @@ const options = {
   minuteIncrement: 1,
   intervalId: null,
 
-  onChange() {
-    clearInterval(this.intervalId);
-  },
-
   onClose(selectedDates) {
     if (selectedDates[0].getTime() < Date.now()) {
       alert('Please choose a date in the future');
@@ -34,11 +30,14 @@ const options = {
         const currentTime = Date.now();
         const decrement = selectedDates[0].getTime() - currentTime;
         const { days, hours, minutes, seconds } = convertMs(decrement);
+        if (decrement <= 0) {
+          clearInterval(this.intervalId);
+          return;
+        }
 
         console.log(`${days}:${hours}:${minutes}:${seconds}`);
         updateTimer({ days, hours, minutes, seconds });
       }, 1000);
-      return this.intervalId;
     });
   },
 };
